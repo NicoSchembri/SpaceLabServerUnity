@@ -19,6 +19,10 @@ public class NetworkManagerUI : MonoBehaviour
     {
         if (serverButton != null)
             serverButton.onClick.AddListener(() => {
+                var transport = NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>();
+                if (transport != null)
+                    transport.SetConnectionData("0.0.0.0", 7778);
+
                 NetworkManager.Singleton.StartServer();
                 UpdateStatus("Server running on 0.0.0.0:7778");
                 ToggleButtons(false);
@@ -44,6 +48,10 @@ public class NetworkManagerUI : MonoBehaviour
 
         if (hostButton != null)
             hostButton.onClick.AddListener(() => {
+                var transport = NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>();
+                if (transport != null)
+                    transport.SetConnectionData("0.0.0.0", 7778); // Bind to all network interfaces
+
                 NetworkManager.Singleton.StartHost();
                 UpdateStatus("Host running on 0.0.0.0:7778");
                 ToggleButtons(false);
